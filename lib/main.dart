@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:reminder/myApp.dart';
+import 'package:reminder/repositories/task_repository.dart';
 import 'package:reminder/repositories/user_repository.dart';
 import 'package:reminder/services/auth_service.dart';
 
@@ -14,6 +15,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => UserRepository()),
         ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(
+            create: (context) =>
+                TaskRepository(auth: context.read<AuthService>())),
       ],
       child: MyApp(),
     ),

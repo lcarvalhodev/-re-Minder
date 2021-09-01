@@ -16,7 +16,7 @@ class TasksPage extends StatefulWidget {
 }
 
 class _TasksPageState extends State<TasksPage> {
-  final tabela = TaskRepository.tabela;
+  final tabela = TaskRepository.lista;
   NumberFormat real = NumberFormat.currency(locale: 'pt_BR', name: 'R\$');
   List<Task> selecionadas = [];
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:reminder/models/task.dart';
 import 'package:reminder/pages/tasks_page.dart';
+import 'package:reminder/repositories/task_repository.dart';
+import 'package:provider/provider.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({Key? key}) : super(key: key);
@@ -19,8 +22,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final _priority = TextEditingController();
   final _location = TextEditingController();
 
+  static List<Task> lista = [];
+  Task task = Task(category: '', priority: '', title: '', description: '');
+
+  late TaskRepository taskRepository;
+
   @override
   Widget build(BuildContext context) {
+    taskRepository = context.watch<TaskRepository>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Adicionar Tarefa'),
@@ -226,7 +235,20 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (_form.currentState!.validate()) {
+                              task.title = _title.value.text.toString();
+                              task.description = _description.value.text.toString();
+                              task.category = _category.value.text.toString();
+                              task.priority = _priority.value.text.toString();
+                              task.hour = _hour.value.text.toString();
+                              task.date = _date.value.text.toString();
+                              task.location = _location.value.text.toString();
+
+                              lista.add(task);
+                              taskRepository.saveAll(lista);
+                            }
+                          },
                           child: Text('Adicionar'),
                         ),
                       ),
