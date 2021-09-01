@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reminder/pages/tasks_page.dart';
+import 'package:reminder/widgets/auth_check.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: TasksPage(),
+      home: AuthCheck(),
     );
   }
 }
