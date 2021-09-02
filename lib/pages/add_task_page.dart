@@ -58,12 +58,25 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          cursorColor: Colors.deepPurple,
                           controller: _title,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.deepPurple),
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(color: Colors.deepPurple),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepPurple),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
                             labelText: 'Título',
                           ),
                           keyboardType: TextInputType.text,
@@ -78,12 +91,25 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          cursorColor: Colors.deepPurple,
                           controller: _description,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.deepPurple),
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(color: Colors.deepPurple),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepPurple),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
                             labelText: 'Descrição',
                           ),
                           keyboardType: TextInputType.text,
@@ -98,14 +124,31 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          cursorColor: Colors.deepPurple,
                           controller: _date,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.deepPurple),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Data',
-                              suffixIcon: Icon(Icons.event)),
+                            labelStyle: TextStyle(color: Colors.deepPurple),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepPurple),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            labelText: 'Data',
+                            suffixIcon: IconTheme(
+                              data: new IconThemeData(color: Colors.deepPurple),
+                              child: Icon(Icons.event),
+                            ),
+                          ),
                           keyboardType: TextInputType.text,
                           validator: (value) {
                             if (value!.isEmpty) {
@@ -118,14 +161,31 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          cursorColor: Colors.deepPurple,
                           controller: _hour,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.deepPurple),
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Horário',
-                              suffixIcon: Icon(Icons.schedule_outlined)),
+                            labelStyle: TextStyle(color: Colors.deepPurple),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepPurple),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            labelText: 'Horário',
+                            suffixIcon: IconTheme(
+                              data: new IconThemeData(color: Colors.deepPurple),
+                              child: Icon(Icons.schedule_outlined),
+                            ),
+                          ),
                           keyboardType: TextInputType.text,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
@@ -141,12 +201,25 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          cursorColor: Colors.deepPurple,
                           controller: _priority,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.deepPurple),
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(color: Colors.deepPurple),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepPurple),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
                             labelText: 'Prioridade',
                           ),
                           keyboardType: TextInputType.text,
@@ -161,12 +234,25 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          cursorColor: Colors.deepPurple,
                           controller: _category,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.deepPurple),
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(color: Colors.deepPurple),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepPurple),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
                             labelText: 'Categoria',
                           ),
                           keyboardType: TextInputType.text,
@@ -181,12 +267,25 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
+                          cursorColor: Colors.deepPurple,
                           controller: _location,
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                          style:
+                              TextStyle(fontSize: 18, color: Colors.deepPurple),
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            labelStyle: TextStyle(color: Colors.deepPurple),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepPurple),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.deepPurple)),
+                            errorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
+                            focusedErrorBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red)),
                             labelText: 'Localização',
                           ),
                           keyboardType: TextInputType.text,
@@ -225,6 +324,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                             style: TextStyle(color: Colors.deepPurple),
                           ),
                           style: ButtonStyle(
+                            side: MaterialStateProperty.all(
+                              BorderSide(width: 1, color: Colors.deepPurple),
+                            ),
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.white),
                           ),
@@ -235,10 +337,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.deepPurple)),
                           onPressed: () {
                             if (_form.currentState!.validate()) {
                               task.title = _title.value.text.toString();
-                              task.description = _description.value.text.toString();
+                              task.description =
+                                  _description.value.text.toString();
                               task.category = _category.value.text.toString();
                               task.priority = _priority.value.text.toString();
                               task.hour = _hour.value.text.toString();
@@ -249,7 +355,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                               taskRepository.saveAll(lista);
                             }
                           },
-                          child: Text('Adicionar'),
+                          child: Text(
+                            'Adicionar',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
                     )

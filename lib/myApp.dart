@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reminder/pages/tasks_page.dart';
 import 'package:reminder/widgets/auth_check.dart';
 
 class MyApp extends StatefulWidget {
@@ -15,9 +14,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: '(re)Minder',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
+      theme: ThemeData(primaryColor: Colors.deepPurple[800]),
       home: AuthCheck(),
     );
   }

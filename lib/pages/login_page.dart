@@ -12,13 +12,18 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final email = TextEditingController();
+  final name = TextEditingController();
   final password = TextEditingController();
+  final confirmPassword = TextEditingController();
+  late String _email, _password, _name, _confirmPassword;
+  bool passwordVisibible = true;
 
   bool isLogin = true;
   late String title;
   late String actionButton;
   late String toggleButton;
   bool loading = false;
+  Icon iconPassword = Icon(Icons.visibility);
 
   @override
   void initState() {
@@ -32,11 +37,11 @@ class _LoginPageState extends State<LoginPage> {
       if (isLogin) {
         title = 'Bem vindo!';
         actionButton = 'Entrar';
-        toggleButton = 'Ainda não tem conta? Cadastre-se.';
+        toggleButton = 'Não tem cadastro? Crie agora.';
       } else {
         title = 'Crie a sua conta';
         actionButton = 'Cadastrar';
-        toggleButton = 'Voltar para a tela de login.';
+        toggleButton = 'Já é cadastrado? Entre agora.';
       }
     });
   }
@@ -55,7 +60,9 @@ class _LoginPageState extends State<LoginPage> {
   registrar() async {
     setState(() => loading = true);
     try {
-      await context.read<AuthService>().registrar(email.text, password.text);
+      await context
+          .read<AuthService>()
+          .registrar(email.text, password.text, name.text);
     } on AuthException catch (e) {
       setState(() => loading = false);
       ScaffoldMessenger.of(context)
@@ -66,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurple[500],
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 100),
@@ -74,20 +82,29 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -1.5,
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Image.asset('images/logo.png'),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(24),
+                  padding: EdgeInsets.fromLTRB(24, 24, 24, 12),
                   child: TextFormField(
+                    cursorColor: Colors.white,
+                    style: TextStyle(color: Colors.white),
                     controller: email,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
+                      errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red)),
+                      focusedErrorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red)),
                       labelText: 'Email',
                     ),
                     keyboardType: TextInputType.emailAddress,
@@ -97,17 +114,86 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      setState(() {
+                        _email = value.trim();
+                      });
+                    },
                   ),
                 ),
+                if (!isLogin)
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                    child: TextFormField(
+                      cursorColor: Colors.white,
+                      style: TextStyle(color: Colors.white),
+                      controller: name,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red)),
+                        focusedErrorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red)),
+                        labelText: 'Nome',
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Informe o nome corretamente.';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _name = value.trim();
+                        });
+                      },
+                    ),
+                  ),
                 Padding(
                   padding:
                       EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
                   child: TextFormField(
+                    cursorColor: Colors.white,
+                    style: TextStyle(color: Colors.white),
                     controller: password,
-                    obscureText: true,
+                    obscureText: passwordVisibible,
                     decoration: InputDecoration(
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.white),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
+                      enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)),
+                      errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red)),
+                      focusedErrorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red)),
                       labelText: 'Senha',
+                      suffixIcon: IconButton(
+                        icon: iconPassword,
+                        color: Colors.white,
+                        onPressed: () {
+                          setState(() {
+                            passwordVisibible = !passwordVisibible;
+                            if (passwordVisibible == true) {
+                              iconPassword = Icon(Icons.visibility);
+                            } else {
+                              iconPassword = Icon(Icons.visibility_off);
+                            }
+                          });
+                        },
+                      ),
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
@@ -118,11 +204,71 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      setState(() {
+                        _password = value.trim();
+                      });
+                    },
                   ),
                 ),
+                if (!isLogin)
+                  Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                    child: TextFormField(
+                      cursorColor: Colors.white,
+                      style: TextStyle(color: Colors.white),
+                      controller: confirmPassword,
+                      obscureText: passwordVisibible,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)),
+                        errorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red)),
+                        focusedErrorBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.red)),
+                        labelText: 'Confirmar Senha',
+                        suffixIcon: IconButton(
+                          icon: iconPassword,
+                          color: Colors.white,
+                          onPressed: () {
+                            setState(() {
+                              passwordVisibible = !passwordVisibible;
+                              if (passwordVisibible == true) {
+                                iconPassword = Icon(Icons.visibility);
+                              } else {
+                                iconPassword = Icon(Icons.visibility_off);
+                              }
+                            });
+                          },
+                        ),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (_confirmPassword != _password) {
+                          return 'A senhas não são correspondentes.';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          _confirmPassword = value.trim();
+                        });
+                      },
+                    ),
+                  ),
                 Padding(
                   padding: EdgeInsets.all(24),
                   child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white)),
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         if (isLogin) {
@@ -134,35 +280,38 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: (loading)
-                          ? [
-                              Padding(
+                      children: [
+                        (loading)
+                            ? Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: SizedBox(
                                   width: 24,
                                   height: 24,
                                   child: CircularProgressIndicator(
-                                    color: Colors.white,
+                                    color: Colors.deepPurple,
                                   ),
                                 ),
                               )
-                            ]
-                          : [
-                              Icon(Icons.check),
-                              Padding(
+                            : Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Text(
                                   actionButton,
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.deepPurple,
+                                  ),
                                 ),
                               )
-                            ],
+                      ],
                     ),
                   ),
                 ),
                 TextButton(
                   onPressed: () => setFormAction(!isLogin),
-                  child: Text(toggleButton),
+                  child: Text(
+                    toggleButton,
+                    style: TextStyle(color: Colors.white),
+                  ),
                 )
               ],
             ),

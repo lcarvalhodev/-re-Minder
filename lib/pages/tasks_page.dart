@@ -22,36 +22,6 @@ class _TasksPageState extends State<TasksPage> {
 
   late UserRepository users;
 
-  dinamicAppBar() {
-    if (selecionadas.isEmpty) {
-      return AppBar(
-        title: Text('(re)Minder'),
-      );
-    } else {
-      return AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            setState(() {
-              selecionadas = [];
-            });
-          },
-        ),
-        title: Text('${selecionadas.length} selecionadas'),
-        backgroundColor: Colors.blueGrey[50],
-        elevation: 1,
-        iconTheme: IconThemeData(color: Colors.black87),
-        textTheme: TextTheme(
-          headline6: TextStyle(
-            color: Colors.black87,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
-    }
-  }
-
   showDetails(Task task) {
     Navigator.push(
       context,
@@ -61,15 +31,16 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
-    users = Provider.of<UserRepository>(context);
-    // users = context.watch<UserRepository>();
-
     return Scaffold(
       drawer: Drawer(
         child: Column(
           children: [
             UserAccountsDrawerHeader(
-                accountName: Text('Leandro Almeida'),
+                accountName: Text(context
+                    .read<AuthService>()
+                    .usuario!
+                    .displayName
+                    .toString()),
                 currentAccountPicture: ClipRRect(
                     borderRadius: BorderRadius.circular(40),
                     child: Image.asset('images/avatar.png')),
@@ -105,6 +76,9 @@ class _TasksPageState extends State<TasksPage> {
               leading: Icon(Icons.logout),
               title: Text(
                 'Sair',
+                style: TextStyle(
+                  color: Colors.red,
+                ),
               ),
               onTap: () {
                 context.read<AuthService>().logout();
@@ -114,7 +88,9 @@ class _TasksPageState extends State<TasksPage> {
           ],
         ),
       ),
-      appBar: dinamicAppBar(),
+      appBar: AppBar(
+        title: Text('(re)Minder'),
+      ),
       body: ListView.separated(
         itemBuilder: (BuildContext context, int task) {
           return ListTile(
@@ -157,6 +133,7 @@ class _TasksPageState extends State<TasksPage> {
         itemCount: tabela.length,
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
         child: Icon(Icons.add),
         onPressed: () => {
           Navigator.push(

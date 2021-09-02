@@ -5,7 +5,6 @@ import 'package:reminder/models/task.dart';
 import 'package:reminder/services/auth_service.dart';
 
 class TaskRepository extends ChangeNotifier {
-  static List<Task> tabela = [];
   static List<Task> lista = [];
   late FirebaseFirestore db;
   late AuthService auth;
