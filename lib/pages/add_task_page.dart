@@ -23,6 +23,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final _priority = TextEditingController();
   final _location = TextEditingController();
 
+  DateTime? date;
+
   String? _prioritySelected;
   final listPriority = ['Baixa', 'Média', 'Alta'];
 
@@ -123,6 +125,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            // onTap: () {
+                            //   pickDate(context);
+                            // },
                             cursorColor: Colors.deepPurple,
                             controller: _date,
                             style: TextStyle(
@@ -303,8 +308,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                               _description.clear();
                               _date.clear();
                               _hour.clear();
-                              _priority.clear();
-                              _category.clear();
+                              setState(() {
+                                _prioritySelected = null;
+                                _categorySelected = null;
+                              });
                               _location.clear();
                             },
                             child: Text(
@@ -380,4 +387,20 @@ class _AddTaskPageState extends State<AddTaskPage> {
           ),
         ),
       );
+
+  Future pickDate(BuildContext context) async {
+    final initialDate = DateTime.now();
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(DateTime.now().year + 10),
+    );
+
+    if (newDate == null) return;
+
+    setState(() {
+      date = newDate;
+    });
+  }
 }

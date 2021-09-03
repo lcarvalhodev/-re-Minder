@@ -22,6 +22,7 @@ class _TasksPageState extends State<TasksPage> {
   List<Task> selecionadas = [];
 
   late UserRepository users;
+  late TaskRepository taskRepository;
 
   showDetails(Task task) {
     Navigator.push(
@@ -32,6 +33,7 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
+     taskRepository = context.watch<TaskRepository>();
     return Scaffold(
       drawer: Drawer(
         child: Column(
@@ -77,9 +79,7 @@ class _TasksPageState extends State<TasksPage> {
               leading: Icon(Icons.logout),
               title: Text(
                 'Sair',
-                style: TextStyle(
-                  color: Helpers.hexToColor("#A83D35"),
-                ),
+                style: TextStyle(color: Helpers.hexToColor("#A83D35"),),
               ),
               onTap: () {
                 context.read<AuthService>().logout();
@@ -134,7 +134,7 @@ class _TasksPageState extends State<TasksPage> {
         itemCount: tabela.length,
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Helpers.hexToColor("#6200EE"),
+        backgroundColor: Colors.deepPurple,
         child: Icon(Icons.add),
         onPressed: () => {
           Navigator.push(

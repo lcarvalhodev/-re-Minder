@@ -8,7 +8,6 @@ class TaskRepository extends ChangeNotifier {
   static List<Task> lista = [];
   late FirebaseFirestore db;
   late AuthService auth;
-  late Task task;
 
   TaskRepository({required this.auth}) {
     _startRepository();
@@ -16,6 +15,7 @@ class TaskRepository extends ChangeNotifier {
 
   _startRepository() async {
     await _startFirestore();
+    await _readTasks();
   }
 
   _startFirestore() {
@@ -27,6 +27,8 @@ class TaskRepository extends ChangeNotifier {
       final snapshot =
           await db.collection('usuarios/${auth.usuario!.uid}/tasks').get();
       snapshot.docs.forEach((doc) {
+        Task task =
+            new Task(title: "", description: "", priority: "", category: "");
         task.title = doc.get('title');
         task.description = doc.get('description');
         task.priority = doc.get('priority');
