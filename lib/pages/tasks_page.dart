@@ -33,7 +33,7 @@ class _TasksPageState extends State<TasksPage> {
 
   @override
   Widget build(BuildContext context) {
-     taskRepository = context.watch<TaskRepository>();
+    taskRepository = context.watch<TaskRepository>();
     return Scaffold(
       drawer: Drawer(
         child: Column(
@@ -79,7 +79,9 @@ class _TasksPageState extends State<TasksPage> {
               leading: Icon(Icons.logout),
               title: Text(
                 'Sair',
-                style: TextStyle(color: Helpers.hexToColor("#A83D35"),),
+                style: TextStyle(
+                  color: Helpers.hexToColor("#A83D35"),
+                ),
               ),
               onTap: () {
                 context.read<AuthService>().logout();
@@ -136,14 +138,8 @@ class _TasksPageState extends State<TasksPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,
         child: Icon(Icons.add),
-        onPressed: () => {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => AddTaskPage(),
-            ),
-          ),
-        },
+        onPressed: () =>
+            {Navigator.of(context).pushReplacementNamed('/addTask')},
       ),
     );
   }

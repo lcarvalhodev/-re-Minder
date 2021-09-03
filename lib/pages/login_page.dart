@@ -51,6 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => loading = true);
     try {
       await context.read<AuthService>().login(email.text, password.text);
+      Navigator.of(context).pushReplacementNamed('/home');
     } on AuthException catch (e) {
       setState(() => loading = false);
       ScaffoldMessenger.of(context)
@@ -64,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
       await context
           .read<AuthService>()
           .registrar(email.text, password.text, name.text);
+          Navigator.of(context).pushReplacementNamed('/home');
     } on AuthException catch (e) {
       setState(() => loading = false);
       ScaffoldMessenger.of(context)

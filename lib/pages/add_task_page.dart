@@ -44,14 +44,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
         title: Text('Adicionar Tarefa'),
         leading: IconButton(
           icon: Icon(Icons.close),
-          onPressed: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => TasksPage(),
-              ),
-            ),
-          },
+          onPressed: () =>
+              {Navigator.of(context).pushReplacementNamed('/home')},
         ),
       ),
       body: SingleChildScrollView(
@@ -125,9 +119,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                            // onTap: () {
-                            //   pickDate(context);
-                            // },
+                            onTap: () {
+                              pickDate(context);
+                            },
                             cursorColor: Colors.deepPurple,
                             controller: _date,
                             style: TextStyle(
@@ -354,6 +348,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
                                 lista.add(task);
                                 taskRepository.saveAll(lista);
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/home');
                               }
                             },
                             child: Text(
