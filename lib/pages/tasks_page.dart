@@ -7,6 +7,7 @@ import 'package:reminder/pages/tasks_details_page.dart';
 import 'package:reminder/repositories/task_repository.dart';
 import 'package:reminder/repositories/user_repository.dart';
 import 'package:reminder/services/auth_service.dart';
+import 'package:reminder/utils/utils.dart';
 
 class TasksPage extends StatefulWidget {
   TasksPage({Key? key}) : super(key: key);
@@ -77,7 +78,7 @@ class _TasksPageState extends State<TasksPage> {
               title: Text(
                 'Sair',
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Helpers.hexToColor("#A83D35"),
                 ),
               ),
               onTap: () {
@@ -133,7 +134,7 @@ class _TasksPageState extends State<TasksPage> {
         itemCount: tabela.length,
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Helpers.hexToColor("#6200EE"),
         child: Icon(Icons.add),
         onPressed: () => {
           Navigator.push(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reminder/services/auth_service.dart';
 import 'package:provider/provider.dart';
+import 'package:reminder/utils/utils.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -73,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple[500],
+      backgroundColor: Helpers.hexToColor("#4F2DA8"),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.only(top: 100),
@@ -297,8 +298,10 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Text(
                                   actionButton,
                                   style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.deepPurple,
+                                    color: Helpers.hexToColor("#6200EE"),
+                                    fontFamily: 'Noto',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.0,
                                   ),
                                 ),
                               )
@@ -310,7 +313,12 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () => setFormAction(!isLogin),
                   child: Text(
                     toggleButton,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Noto',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.0,
+                    ),
                   ),
                 )
               ],
