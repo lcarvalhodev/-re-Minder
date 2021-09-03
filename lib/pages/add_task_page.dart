@@ -23,6 +23,12 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final _priority = TextEditingController();
   final _location = TextEditingController();
 
+  String? _prioritySelected;
+  final listPriority = ['Baixa', 'Média', 'Alta'];
+
+  String? _categorySelected;
+  final listCategory = ['Pessoal', 'Casa', 'Trabalho'];
+
   static List<Task> lista = [];
   Task task = Task(category: '', priority: '', title: '', description: '');
 
@@ -183,58 +189,68 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            cursorColor: Colors.deepPurple,
-                            controller: _priority,
-                            style: TextStyle(
-                              fontFamily: 'Noto',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20.0,
-                              color: Helpers.hexToColor("#00000099"),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
                             ),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                hint: Text(
+                                  "Prioridade",
+                                  style: TextStyle(
+                                    fontFamily: 'Noto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 20.0,
+                                    color: Helpers.hexToColor("#00000099"),
+                                  ),
+                                ),
+                                iconSize: 36,
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Helpers.hexToColor("#545454"),
+                                ),
+                                isExpanded: true,
+                                value: _prioritySelected,
+                                items: listPriority.map(buildMenuItem).toList(),
+                                onChanged: (value) => setState(
+                                    () => this._prioritySelected = value),
                               ),
-                              labelText: 'Prioridade',
                             ),
-                            keyboardType: TextInputType.text,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Informe a prioridade';
-                              }
-                              return null;
-                            },
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            cursorColor: Colors.deepPurple,
-                            controller: _category,
-                            style: TextStyle(
-                              fontFamily: 'Noto',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20.0,
-                              color: Helpers.hexToColor("#00000099"),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
                             ),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                hint: Text(
+                                  "Categoria",
+                                  style: TextStyle(
+                                    fontFamily: 'Noto',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 20.0,
+                                    color: Helpers.hexToColor("#00000099"),
+                                  ),
+                                ),
+                                iconSize: 36,
+                                icon: Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Helpers.hexToColor("#545454"),
+                                ),
+                                isExpanded: true,
+                                value: _categorySelected,
+                                items: listCategory.map(buildMenuItem).toList(),
+                                onChanged: (value) => setState(
+                                    () => this._categorySelected = value),
                               ),
-                              labelText: 'Categoria',
                             ),
-                            keyboardType: TextInputType.text,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Informe a categoria';
-                              }
-                              return null;
-                            },
                           ),
                         ),
                         Padding(
@@ -255,6 +271,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                 borderSide: BorderSide.none,
                               ),
                               labelText: 'Localização',
+                              suffixIcon: Icon(
+                                Icons.location_on,
+                                color: Helpers.hexToColor("#545454"),
+                              ),
                             ),
                             keyboardType: TextInputType.text,
                             validator: (value) {
@@ -319,8 +339,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                 task.title = _title.value.text.toString();
                                 task.description =
                                     _description.value.text.toString();
-                                task.category = _category.value.text.toString();
-                                task.priority = _priority.value.text.toString();
+                                task.category = _categorySelected.toString();
+                                task.priority = _prioritySelected.toString();
                                 task.hour = _hour.value.text.toString();
                                 task.date = _date.value.text.toString();
                                 task.location = _location.value.text.toString();
@@ -350,4 +370,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
       ),
     );
   }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(
+          item,
+          style: TextStyle(
+            color: Helpers.hexToColor("#575757"),
+          ),
+        ),
+      );
 }
