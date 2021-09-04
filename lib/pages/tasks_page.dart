@@ -100,14 +100,14 @@ class _TasksPageState extends State<TasksPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
-            leading: (selecionadas.contains(tabela[task]))
-                ? CircleAvatar(
-                    child: Icon(Icons.check),
-                  )
-                : SizedBox(
-                    child: Image.asset('images/avatar.png'),
-                    width: 40,
-                  ),
+            leading: Icon(
+              Icons.circle_outlined,
+              color: tabela[task].priority == 'Baixa'
+                  ? Helpers.hexToColor("#5AC0B9")
+                  : tabela[task].priority == 'Média'
+                      ? Helpers.hexToColor("#F5BC5B")
+                      : Helpers.hexToColor("#F5655B"),
+            ),
             title: Text(
               tabela[task].title,
               style: TextStyle(
@@ -121,14 +121,14 @@ class _TasksPageState extends State<TasksPage> {
             ),
             selected: selecionadas.contains(tabela[task]),
             selectedTileColor: Colors.indigo[50],
-            onLongPress: () {
-              setState(() {
-                (selecionadas.contains(tabela[task]))
-                    ? selecionadas.remove(tabela[task])
-                    : selecionadas.add(tabela[task]);
-              });
-            },
-            onTap: () => showDetails(tabela[task]),
+            // onLongPress: () {
+            //   setState(() {
+            //     (selecionadas.contains(tabela[task]))
+            //         ? selecionadas.remove(tabela[task])
+            //         : selecionadas.add(tabela[task]);
+            //   });
+            // },
+            // onTap: () => showDetails(tabela[task]),
           );
         },
         padding: EdgeInsets.all(16),
