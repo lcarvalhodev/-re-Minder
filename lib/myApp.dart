@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reminder/pages/add_task_page.dart';
 import 'package:reminder/pages/login_page.dart';
+import 'package:reminder/pages/profile_page.dart';
 import 'package:reminder/pages/tasks_page.dart';
 import 'package:reminder/widgets/auth_check.dart';
 
@@ -24,6 +25,7 @@ class _MyAppState extends State<MyApp> {
           '/login': (context) => LoginPage(),
           '/home': (context) => TasksPage(),
           '/addTask': (context) => AddTaskPage(),
+          '/profile': (context) => ProfilePage(),
         });
   }
 }

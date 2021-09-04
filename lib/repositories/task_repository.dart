@@ -35,7 +35,7 @@ class TaskRepository extends ChangeNotifier {
         task.category = doc.get('category');
         task.hour = doc.get('hour');
         task.date = doc.get('date');
-        task.location = doc.get('date');
+        task.location = doc.get('location');
         lista.add(task);
         notifyListeners();
       });

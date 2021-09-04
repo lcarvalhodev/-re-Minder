@@ -8,6 +8,8 @@ class AuthException implements Exception {
 
 class AuthService extends ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  User? user = FirebaseAuth.instance.currentUser;
+
   User? usuario;
   bool isLoading = true;
 
@@ -40,6 +42,24 @@ class AuthService extends ChangeNotifier {
         throw AuthException('A senha é muito fraca.');
       } else if (e.code == 'email-already-in-use') {
         throw AuthException('Este email já está cadastrado.');
+      }
+    }
+  }
+
+  updateUser(
+      String email, String oldPassword, String password, String name) async {
+    try {
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: oldPassword);
+      usuario!.reauthenticateWithCredential(credential);
+      await usuario!.updatePassword(password);
+      await usuario!.updateDisplayName(name);
+      _getUser();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        throw AuthException('A senha é muito fraca.');
+      } else if (e.code == 'wrong-password') {
+        throw AuthException('Senha incorreta.');
       }
     }
   }
