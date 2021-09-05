@@ -18,7 +18,17 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: '(re)Minder',
-        theme: ThemeData(primaryColor: Colors.deepPurple[800]),
+        theme: ThemeData(
+          primaryColor: Colors.deepPurple[800],
+          bottomSheetTheme: BottomSheetThemeData(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(30),
+              ),
+            ),
+          ),
+        ),
         initialRoute: '/',
         routes: {
           '/': (context) => AuthCheck(),

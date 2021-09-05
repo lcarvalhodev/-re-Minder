@@ -30,6 +30,13 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
   }
 
+  _updateUserData(String password, String name) async {
+    usuario = _auth.currentUser;
+    await usuario!.updatePassword(password);
+    await usuario!.updateDisplayName(name);
+    notifyListeners();
+  }
+
   registrar(String email, String password, String name) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
@@ -52,9 +59,7 @@ class AuthService extends ChangeNotifier {
       AuthCredential credential =
           EmailAuthProvider.credential(email: email, password: oldPassword);
       usuario!.reauthenticateWithCredential(credential);
-      await usuario!.updatePassword(password);
-      await usuario!.updateDisplayName(name);
-      _getUser();
+      _updateUserData(password, name);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw AuthException('A senha é muito fraca.');
