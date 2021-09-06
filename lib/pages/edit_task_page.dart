@@ -5,21 +5,15 @@ import 'package:reminder/repositories/task_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:reminder/utils/utils.dart';
 
-class AddTaskPage extends StatefulWidget {
-  const AddTaskPage({Key? key}) : super(key: key);
+class EditTaskPage extends StatefulWidget {
+  final Task taskEditable;
+  const EditTaskPage({Key? key, required this.taskEditable}) : super(key: key);
 
   @override
-  _AddTaskPageState createState() => _AddTaskPageState();
+  _EditTaskPageState createState() => _EditTaskPageState();
 }
 
-class _AddTaskPageState extends State<AddTaskPage> {
-  final _form = GlobalKey<FormState>();
-  final _title = TextEditingController();
-  final _description = TextEditingController();
-  final _date = TextEditingController();
-  final _hour = TextEditingController();
-  final _location = TextEditingController();
-
+class _EditTaskPageState extends State<EditTaskPage> {
   DateTime? date;
 
   bool loading = false;
@@ -49,6 +43,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _form = GlobalKey<FormState>();
+    final _title = TextEditingController(text: widget.taskEditable.title);
+    final _description =
+        TextEditingController(text: widget.taskEditable.description);
+    final _date = TextEditingController(text: widget.taskEditable.date);
+    final _hour = TextEditingController(text: widget.taskEditable.hour);
+    final _location = TextEditingController(text: widget.taskEditable.location);
+    final taskId = widget.taskEditable.id;
     taskRepository = context.watch<TaskRepository>();
     return Scaffold(
       appBar: AppBar(
@@ -222,7 +224,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                     color: Colors.white,
                                   ),
                                   child: DropdownButtonHideUnderline(
-                                    child: DropdownButtonFormField<String>(
+                                    child: DropdownButton<String>(
                                       hint: Text(
                                         "Prioridade",
                                         style: TextStyle(
@@ -239,10 +241,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                         color: Helpers.hexToColor("#545454"),
                                       ),
                                       isExpanded: true,
-                                      validator: (value) => value == null
-                                          ? 'Escolha uma opção de prioridade'
-                                          : null,
-                                      value: _prioritySelected,
+                                      value: (_prioritySelected == null) ? widget.taskEditable.priority : _prioritySelected,
                                       items: listPriority
                                           .map(buildMenuItem)
                                           .toList(),
@@ -261,10 +260,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                     color: Colors.white,
                                   ),
                                   child: DropdownButtonHideUnderline(
-                                    child: DropdownButtonFormField<String>(
-                                      validator: (value) => value == null
-                                          ? 'Escolha uma opção de categoria'
-                                          : null,
+                                    child: DropdownButton<String>(
                                       hint: Text(
                                         "Categoria",
                                         style: TextStyle(
@@ -281,7 +277,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                         color: Helpers.hexToColor("#545454"),
                                       ),
                                       isExpanded: true,
-                                      value: _categorySelected,
+                                      value: (_categorySelected == null) ? widget.taskEditable.category : _categorySelected,
                                       items: listCategory
                                           .map(buildMenuItem)
                                           .toList(),
@@ -384,6 +380,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                       setState(() {
                                         loading = true;
                                       });
+                                      task.id = taskId;
                                       task.title = _title.value.text.toString();
                                       task.description =
                                           _description.value.text.toString();
@@ -397,13 +394,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
                                           _location.value.text.toString();
 
                                       lista.add(task);
-                                      taskRepository.saveAll(lista);
+                                      taskRepository.edit(task);
                                       Navigator.of(context)
                                           .pushReplacementNamed('/home');
                                     }
                                   },
                                   child: Text(
-                                    'ADICIONAR',
+                                    'EDITAR',
                                     style: TextStyle(
                                         fontFamily: 'Noto',
                                         fontWeight: FontWeight.w500,

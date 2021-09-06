@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:reminder/models/task.dart';
+import 'package:reminder/pages/edit_task_page.dart';
 import 'package:reminder/repositories/task_repository.dart';
 import 'package:reminder/repositories/user_repository.dart';
 import 'package:reminder/services/auth_service.dart';
@@ -22,219 +23,224 @@ class _TasksPageState extends State<TasksPage> {
   late UserRepository users;
   late TaskRepository taskRepository;
 
-  showDetails(Task task) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (_) => DetailsTaskPage(task: task)),
-    // );
-  }
-
   orderList() {
     setState(() {
       tabela.sort((a, b) => a.date!.compareTo(b.date!));
     });
   }
 
-  Widget buildSheet(Task task) => Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-              child: Text(
-                "Detalhes",
-                style: TextStyle(
-                    color: Helpers.hexToColor("#502DA8"), fontSize: 18.0),
-              ),
+  Widget buildSheet(Task task) {
+    taskRepository = context.watch<TaskRepository>();
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
+            child: Text(
+              "Detalhes",
+              style: TextStyle(
+                  color: Helpers.hexToColor("#502DA8"), fontSize: 18.0),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-              child: Divider(
-                color: Helpers.hexToColor("#502DA8"),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+            child: Divider(
+              color: Helpers.hexToColor("#502DA8"),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    task.title,
-                    style: TextStyle(
-                      fontFamily: 'Noto',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 17.0,
-                      color: Helpers.hexToColor("#545454"),
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  task.title,
+                  style: TextStyle(
+                    fontFamily: 'Noto',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 17.0,
+                    color: Helpers.hexToColor("#545454"),
                   ),
-                  IconButton(
-                    onPressed: () => {},
-                    icon: Icon(Icons.delete_outline),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Text(
-                task.description,
-                style: TextStyle(
-                  color: Helpers.hexToColor("#545454"),
-                  fontFamily: 'Noto',
-                  fontWeight: FontWeight.w300,
-                  fontSize: 12.0,
                 ),
+                IconButton(
+                  onPressed: () => {taskRepository.remove(task)},
+                  icon: Icon(Icons.delete_outline),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            child: Text(
+              task.description,
+              style: TextStyle(
+                color: Helpers.hexToColor("#545454"),
+                fontFamily: 'Noto',
+                fontWeight: FontWeight.w300,
+                fontSize: 12.0,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: Icon(Icons.location_on_outlined),
-                  ),
-                  Text(
-                    task.location.toString(),
-                    style: TextStyle(
-                      color: Helpers.hexToColor("#545454"),
-                      fontFamily: 'Noto',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.0,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: Icon(Icons.event),
-                  ),
-                  Text(
-                    task.date.toString(),
-                    style: TextStyle(
-                      color: Helpers.hexToColor("#545454"),
-                      fontFamily: 'Noto',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.0,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: Icon(Icons.schedule_outlined),
-                  ),
-                  Text(
-                    task.hour.toString(),
-                    style: TextStyle(
-                      color: Helpers.hexToColor("#545454"),
-                      fontFamily: 'Noto',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.0,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Text(
-                "PRIORIDADE " + task.priority.toUpperCase(),
-                style: TextStyle(
-                  color: Helpers.hexToColor("#545454"),
-                  fontFamily: 'Noto',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Icon(Icons.location_on_outlined),
                 ),
+                Text(
+                  task.location.toString(),
+                  style: TextStyle(
+                    color: Helpers.hexToColor("#545454"),
+                    fontFamily: 'Noto',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Icon(Icons.event),
+                ),
+                Text(
+                  task.date.toString(),
+                  style: TextStyle(
+                    color: Helpers.hexToColor("#545454"),
+                    fontFamily: 'Noto',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Icon(Icons.schedule_outlined),
+                ),
+                Text(
+                  task.hour.toString(),
+                  style: TextStyle(
+                    color: Helpers.hexToColor("#545454"),
+                    fontFamily: 'Noto',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            child: Text(
+              "PRIORIDADE " + task.priority.toUpperCase(),
+              style: TextStyle(
+                color: Helpers.hexToColor("#545454"),
+                fontFamily: 'Noto',
+                fontWeight: FontWeight.w500,
+                fontSize: 14.0,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
-              child: Row(
-                children: [
-                  Text(
-                    "Categoria: ",
-                    style: TextStyle(
-                      color: Helpers.hexToColor("#545454"),
-                      fontFamily: 'Noto',
-                      fontWeight: FontWeight.w300,
-                      fontSize: 12.0,
-                    ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+            child: Row(
+              children: [
+                Text(
+                  "Categoria: ",
+                  style: TextStyle(
+                    color: Helpers.hexToColor("#545454"),
+                    fontFamily: 'Noto',
+                    fontWeight: FontWeight.w300,
+                    fontSize: 12.0,
                   ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(width: 80, height: 30),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Helpers.hexToColor("#C8BEE3"),
-                        ),
-                      ),
-                      child: Text(
-                        task.category,
-                        style: TextStyle(
-                            color: Helpers.hexToColor("#797482"),
-                            fontFamily: 'Noto',
-                            fontWeight: FontWeight.w100,
-                            fontSize: 11.0),
+                ),
+                ConstrainedBox(
+                  constraints: BoxConstraints.tightFor(width: 80, height: 30),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Helpers.hexToColor("#C8BEE3"),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: TextButton(
-                      onPressed: () => {},
-                      child: Text(
-                        "CONCLUIR",
-                        style: TextStyle(
-                          color: Helpers.hexToColor("#25A8A0"),
+                    child: Text(
+                      task.category,
+                      style: TextStyle(
+                          color: Helpers.hexToColor("#797482"),
                           fontFamily: 'Noto',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                        ),
-                      ),
+                          fontWeight: FontWeight.w100,
+                          fontSize: 11.0),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12),
-                    child: TextButton(
-                      onPressed: () => {},
-                      child: Text(
-                        "EDITAR",
-                        style: TextStyle(
-                          color: Helpers.hexToColor("#25A8A0"),
-                          fontFamily: 'Noto',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: TextButton(
+                    onPressed: () => {taskRepository.remove(task)},
+                    child: Text(
+                      "CONCLUIR",
+                      style: TextStyle(
+                        color: Helpers.hexToColor("#25A8A0"),
+                        fontFamily: 'Noto',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: TextButton(
+                    onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditTaskPage(
+                            taskEditable: task,
+                          ),
+                        ),
+                      ),
+                    },
+                    child: Text(
+                      "EDITAR",
+                      style: TextStyle(
+                        color: Helpers.hexToColor("#25A8A0"),
+                        fontFamily: 'Noto',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

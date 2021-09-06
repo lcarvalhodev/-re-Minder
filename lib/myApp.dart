@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reminder/pages/add_task_page.dart';
+import 'package:reminder/pages/edit_task_page.dart';
 import 'package:reminder/pages/login_page.dart';
 import 'package:reminder/pages/profile_page.dart';
 import 'package:reminder/pages/tasks_page.dart';

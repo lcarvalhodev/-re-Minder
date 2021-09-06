@@ -26,9 +26,11 @@ class TaskRepository extends ChangeNotifier {
     if (auth.usuario != null && lista.isEmpty) {
       final snapshot =
           await db.collection('usuarios/${auth.usuario!.uid}/tasks').get();
+      print(snapshot);
       snapshot.docs.forEach((doc) {
         Task task =
             new Task(title: "", description: "", priority: "", category: "");
+        task.id = doc.id;
         task.title = doc.get('title');
         task.description = doc.get('description');
         task.priority = doc.get('priority');
@@ -46,10 +48,7 @@ class TaskRepository extends ChangeNotifier {
     tasks.forEach((task) async {
       if (!lista.any((atual) => atual.title == task.title)) {
         lista.add(task);
-        await db
-            .collection('usuarios/${auth.usuario!.uid}/tasks')
-            .doc(task.title)
-            .set({
+        await db.collection('usuarios/${auth.usuario!.uid}/tasks').doc().set({
           'title': task.title,
           'description': task.description,
           'priority': task.priority,
@@ -63,10 +62,29 @@ class TaskRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  edit(Task task) async {
+    // var snapshots = await db.collection('usuarios').snapshots();
+    lista.removeWhere((element) => element.id == task.id);
+    await db
+        .collection('usuarios/${auth.usuario!.uid}/tasks')
+        .doc(task.id)
+        .update({
+      'title': task.title,
+      'description': task.description,
+      'priority': task.priority,
+      'category': task.category,
+      'date': task.date,
+      'hour': task.hour,
+      'location': task.location,
+    });
+    lista.add(task);
+    notifyListeners();
+  }
+
   remove(Task task) async {
     await db
         .collection('usuarios/${auth.usuario!.uid}/tasks')
-        .doc(task.title)
+        .doc(task.id)
         .delete();
     lista.remove(task);
     notifyListeners();
